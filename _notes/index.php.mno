@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_Dept_Recordset1" value="name:Code;datatype:int,name:Dept;datatype:string" />
+	<infoitem key="UD_Employee_Recordset" value="name:Id;datatype:int,name:Surname;datatype:string,name:Firstname;datatype:string,name:DoB;datatype:date,name:Gendor;datatype:string,name:Dept;datatype:string,name:Role;datatype:string" />
+	<infoitem key="UD_Recordset1" value="name:Id;datatype:int,name:Surname;datatype:string,name:Firstname;datatype:string,name:DoB;datatype:date,name:Gendor;datatype:string,name:Dept;datatype:string,name:Role;datatype:string" />
+	<infoitem key="UD_dept_datasheet" value="name:Code;datatype:int,name:Dept;datatype:string" />
+	<infoitem key="UD_employee_datasheet" value="name:Id;datatype:int,name:Surname;datatype:string,name:Firstname;datatype:string,name:DoB;datatype:date,name:Gendor;datatype:string,name:Dept;datatype:string,name:Role;datatype:string" />
+</info>
