@@ -92,7 +92,7 @@ $totalRows_loggedinuser = mysql_num_rows($loggedinuser);
 						<table width="194" border="0" align="center" cellpadding="0" cellspacing="0">
 							<tr><td height="3"></td></tr>
 							<tr>
-							  <td height="20" class="cat-head">欢迎您: <?php echo $row_loggedinuser['Surname']; ?></td></tr>
+							  <td height="20" class="cat-head">欢迎您: <?php echo $row_loggedinuser['Surname']; ?><?php echo $row_loggedinuser['Firstname']; ?></td></tr>
                              <tr>
 							 <td height="20" class="cat-head"><a href="<?php echo $logoutAction ?>">退出登录</a></td></tr>
 							<tr><td class="leftlinks"><a href="#" target="_blank">ï¿½ Category Name</a></td></tr>
