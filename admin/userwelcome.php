@@ -3,6 +3,11 @@
 //initialize the session
 if (!isset($_SESSION)) {
   session_start();
+   $v_url=$_SERVER['HTTP_REFERER'];
+   if(($v_url != "http://www.goldshuttletextiles.com/admin/admin.php") || (!isset($_SESSION['MM_Username']))) {
+	   session_destroy();
+	   header("Location: http://www.goldshuttletextiles.com/admin/admin.php");
+   }
 }
 
 // ** Logout the current user. **
