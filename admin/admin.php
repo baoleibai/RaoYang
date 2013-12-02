@@ -114,8 +114,11 @@ function MM_validateForm() { //v4.0
   <tr>
     <th colspan="2" scope="col" onfocus="MM_validateForm('username','','R','password','','R');return document.MM_returnValue">员工登陆</th>
     </tr>
+    <tr>
+    
+    </tr>
   <tr>
-    <td width="60" onfocus="MM_validateForm('username','','R','password','','R');return document.MM_returnValue">用户名</td>
+    <td width="60">用户名</td>
     <td width="171">
       <input name="username" type="text" id="username" autocomplete="off" size="20" /></td>
   </tr>

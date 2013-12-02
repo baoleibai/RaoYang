@@ -1,3 +1,4 @@
+<?php require_once('../Connections/raoYang.php'); ?>
 <?php
 //initialize the session
 if (!isset($_SESSION)) {
@@ -26,6 +27,48 @@ if ((isset($_GET['doLogout'])) &&($_GET['doLogout']=="true")){
   }
 }
 ?>
+<?php
+if (!function_exists("GetSQLValueString")) {
+function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
+{
+  if (PHP_VERSION < 6) {
+    $theValue = get_magic_quotes_gpc() ? stripslashes($theValue) : $theValue;
+  }
+
+  $theValue = function_exists("mysql_real_escape_string") ? mysql_real_escape_string($theValue) : mysql_escape_string($theValue);
+
+  switch ($theType) {
+    case "text":
+      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
+      break;    
+    case "long":
+    case "int":
+      $theValue = ($theValue != "") ? intval($theValue) : "NULL";
+      break;
+    case "double":
+      $theValue = ($theValue != "") ? doubleval($theValue) : "NULL";
+      break;
+    case "date":
+      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
+      break;
+    case "defined":
+      $theValue = ($theValue != "") ? $theDefinedValue : $theNotDefinedValue;
+      break;
+  }
+  return $theValue;
+}
+}
+
+$colname_loggedinuser = "-1";
+if (isset($_SESSION['MM_Username'])) {
+  $colname_loggedinuser = $_SESSION['MM_Username'];
+}
+mysql_select_db($database_raoYang, $raoYang);
+$query_loggedinuser = sprintf("SELECT Surname, Firstname FROM Employee WHERE username = %s", GetSQLValueString($colname_loggedinuser, "text"));
+$loggedinuser = mysql_query($query_loggedinuser, $raoYang) or die(mysql_error());
+$row_loggedinuser = mysql_fetch_assoc($loggedinuser);
+$totalRows_loggedinuser = mysql_num_rows($loggedinuser);
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <title>RaoYang Gold Shuttle Textiles Factory</title>
@@ -49,7 +92,7 @@ if ((isset($_GET['doLogout'])) &&($_GET['doLogout']=="true")){
 						<table width="194" border="0" align="center" cellpadding="0" cellspacing="0">
 							<tr><td height="3"></td></tr>
 							<tr>
-							  <td height="20" class="cat-head">欢迎您</td></tr>
+							  <td height="20" class="cat-head">欢迎您: <?php echo $row_loggedinuser['Surname']; ?></td></tr>
                              <tr>
 							 <td height="20" class="cat-head"><a href="<?php echo $logoutAction ?>">退出登录</a></td></tr>
 							<tr><td class="leftlinks"><a href="#" target="_blank">ï¿½ Category Name</a></td></tr>
@@ -117,3 +160,6 @@ if ((isset($_GET['doLogout'])) &&($_GET['doLogout']=="true")){
 </table>
 </body>
 </html>
+<?php
+mysql_free_result($loggedinuser);
+?>
