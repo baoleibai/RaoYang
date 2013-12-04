@@ -4,7 +4,7 @@
 if (!isset($_SESSION)) {
   session_start();
    $v_url=$_SERVER['HTTP_REFERER'];
-   if(($v_url != "http://www.goldshuttletextiles.com/admin/admin.php") || (!isset($_SESSION['MM_Username']))) {
+   if( (!isset($_SESSION['MM_Username']))) {
 	   session_destroy();
 	   header("Location: http://www.goldshuttletextiles.com/admin/admin.php");
    }
@@ -86,7 +86,7 @@ $totalRows_loggedinuser = mysql_num_rows($loggedinuser);
 </head>
 <body>
 <table width="100" border="0" align="center" cellpadding="0" cellspacing="0" class="outer">
-	<tr><td class="name">饶阳金梭棉纺织厂网站管理页面<span class="name2"></span></td></tr></tr>
+	<tr><td class="name" align="center">饶阳金梭棉纺织厂网站管理页面<span class="name2"></span></td></tr></tr>
 	
 	<tr><td>&nbsp;</td></tr>
 	<tr>
@@ -100,7 +100,7 @@ $totalRows_loggedinuser = mysql_num_rows($loggedinuser);
 							  <td height="20" class="cat-head">欢迎您: <?php echo $row_loggedinuser['Surname']; ?><?php echo $row_loggedinuser['Firstname']; ?></td></tr>
                              <tr>
 							 <td height="20" class="cat-head"><a href="<?php echo $logoutAction ?>">退出登录</a></td></tr>
-							<tr><td class="leftlinks"><a href="#" target="_blank">ï¿½ Category Name</a></td></tr>
+							<tr><td class="leftlinks"><a href="userwelcome.php" target="_self">添加产品</a></td></tr>
 						</table>
 					</td>
 					<td valign="top">
@@ -113,40 +113,151 @@ $totalRows_loggedinuser = mysql_num_rows($loggedinuser);
 <table border="0" width="707"  cellspacing="0" cellpadding="0">
 													<tr>
 														<td valign="top" class="box-border">
-															<table width="707"  border="0" align="center" cellpadding="0" cellspacing="0">
-																<tr><td height="8"></td></tr>
-																<tr><td class="box-head">Place Name</td></tr>
-																<tr><td height="19">&nbsp;</td></tr>
-																<tr><td align="center"><img src="images/beauty-products1.jpg" alt="beauty" style="border:1px solid #c2c2c2;" /></td></tr>
-																<tr><td height="17"></td></tr>
-																<tr><td class="smal-txt">sample text sample text sample text sample text sample text...</td></tr>
-																<tr><td height="11"></td></tr>
-																<tr>
-																	<td height="50">
-																		<table border="0" align="center" cellpadding="0" cellspacing="0">
-																			<tr>
-																				<td width="70" class="price">$72.00</td>
-																				<td width="1" bgcolor="#D9D9D9"></td>
-																				<td width="117">
-																					<table width="94" border="0" align="center" cellpadding="0" cellspacing="0">
-																						<tr><td class="add">&raquo; <a href="#" target="_blank">Add to Cart</a></td></tr>
-																						<tr><td height="4"></td></tr>
-																						<tr><td class="details">&raquo; <a href="#" target="_blank">Details</a></td></tr>
-																					</table>
-																				</td>
-																			</tr>
-																		</table>
-																	</td>
-																</tr>
-															</table>
+														  <form action="" method="post" name="addProduct" target="_self">
+                                                            <table width="707" border="0" cellpadding="1">
+  <tr>
+    <th colspan="2"  class="box-head" scope="col">Add Product</th>
+    </tr>
+  <tr>
+    <td width="120">Product Name:</td>
+    <td width="577"><label>
+      <input name="Name" type="text" id="Name" size="50" maxlength="100" />
+    </label></td>
+  </tr>
+  <tr>
+    <td>Unit Price (US $/ Meter):</td>
+    <td><label>
+      <input type="text" name="UnitPrice" id="UnitPrice" />
+    </label></td>
+  </tr>
+  <tr>
+    <td>Min. Order (Meter):</td>
+    <td><label>
+      <input type="text" name="MinOrder" id="MinOrder" />
+    </label></td>
+  </tr>
+  <tr>
+    <td>Trade Terms:</td>
+    <td><input type="checkbox" name="checkbox" id="checkbox" /></td>
+  </tr>
+  <tr>
+    <td>Payment Terms:</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Product Picture:</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Price Valid From:</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Price Valid To:</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="box-head">Basic Info.</td>
+    </tr>
+  <tr>
+    <td>Material:</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Usage:</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Width (Inch):</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Extra Width (Inch):</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Weight (g/m²):</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Technics:</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Composition:</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Yarn Count:</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Yarn Type:</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Density:</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Edge:</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Parttern:</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Color:</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Export Markets:</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td colspan="2" class="box-head">Additional Info.</td>
+    </tr>
+  <tr>
+    <td>Packing:</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Standars:</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Origin:</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>HS Code:</td>
+    <td>&nbsp;</td>
+  </tr>
+    <tr>
+    <td>Production Capacity (Meter/Month):</td>
+    <td>&nbsp;</td>
+  </tr>
+    <tr>
+    <td colspan="2" class="box-head">Product Description.</td>
+    </tr>
+    <tr>
+    <td colspan="2">&nbsp;</td>
+    </tr>
+    <tr>
+    <td colspan="2">HS Code:</td>
+    </tr>
+</table>
+
+                                                            
+                                                            
+                                                            </form>
 														</td>
-														<td width="6" valign="top"></td>
-														
 													</tr>
 												</table>
 											</td>
 										</tr>
-										<tr><td valign="top">&nbsp;</td></tr>
+										
 									</table>
 								</td>
 							</tr>

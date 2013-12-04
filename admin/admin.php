@@ -104,12 +104,12 @@ function MM_validateForm() { //v4.0
 //-->
 </script>
 </head>
-<body class="outer">
-<table width="100" border="0" align="center" cellpadding="0" cellspacing="0" class="outer">
+<body >
+<table width="100" height="232" border="0" align="center" cellpadding="0" cellspacing="0" class="outer">
 	<tr>
 	  <td class="name"  align="center">饶阳金梭棉纺织厂网站管理页面<span class="name2"></span></td></tr>
 	<tr>
-		<td valign="top"><form action="<?php echo $loginFormAction; ?>" method="POST" id="userlogin" onsubmit="MM_goToURL('parent','userwelcome.php');return document.MM_returnValue">
+		<td height="162" valign="top"><form action="<?php echo $loginFormAction; ?>" method="POST" id="userlogin" onsubmit="MM_goToURL('parent','userwelcome.php');return document.MM_returnValue">
           <table width="247" border="0" align="center" cellpadding="1">
   <tr>
     <th colspan="2" scope="col" onfocus="MM_validateForm('username','','R','password','','R');return document.MM_returnValue">员工登陆</th>
