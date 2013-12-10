@@ -2,4 +2,6 @@
 <info>
 	<infoitem key="UD_Recordset1" value="name:Surname;datatype:string,name:Firstname;datatype:string" />
 	<infoitem key="UD_loggedinuser" value="name:Surname;datatype:string,name:Firstname;datatype:string" />
+	<infoitem key="UD_EdgeType" value="name:Edge;datatype:string" />
+	<infoitem key="UD_EdgeTypeList" value="name:id;datatype:int,name:Edge;datatype:string" />
 </info>

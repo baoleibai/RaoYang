@@ -1,4 +1,5 @@
 <?php require_once('../Connections/raoYang.php'); ?>
+<?php require_once('../Connections/raoYang.php'); ?>
 <?php
 //initialize the session
 if (!isset($_SESSION)) {
@@ -73,6 +74,12 @@ $query_loggedinuser = sprintf("SELECT Surname, Firstname FROM Employee WHERE use
 $loggedinuser = mysql_query($query_loggedinuser, $raoYang) or die(mysql_error());
 $row_loggedinuser = mysql_fetch_assoc($loggedinuser);
 $totalRows_loggedinuser = mysql_num_rows($loggedinuser);
+
+mysql_select_db($database_raoYang, $raoYang);
+$query_EdgeTypeList = "SELECT * FROM ProductEdge ORDER BY id ASC";
+$EdgeTypeList = mysql_query($query_EdgeTypeList, $raoYang) or die(mysql_error());
+$row_EdgeTypeList = mysql_fetch_assoc($EdgeTypeList);
+$totalRows_EdgeTypeList = mysql_num_rows($EdgeTypeList);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -119,8 +126,8 @@ $totalRows_loggedinuser = mysql_num_rows($loggedinuser);
     <th colspan="2"  class="box-head" scope="col">Add Product</th>
     </tr>
   <tr>
-    <td width="120">Product Name:</td>
-    <td width="577"><label>
+    <td width="158">Product Name:</td>
+    <td width="539"><label>
       <input name="Name" type="text" id="Name" size="50" maxlength="100" />
     </label></td>
   </tr>
@@ -138,7 +145,7 @@ $totalRows_loggedinuser = mysql_num_rows($loggedinuser);
   </tr>
   <tr>
     <td>Trade Terms:</td>
-    <td><input type="checkbox" name="checkbox" id="checkbox" /></td>
+    <td>&nbsp;</td>
   </tr>
   <tr>
     <td>Payment Terms:</td>
@@ -201,11 +208,26 @@ $totalRows_loggedinuser = mysql_num_rows($loggedinuser);
   </tr>
   <tr>
     <td>Edge:</td>
-    <td>&nbsp;</td>
+    <td><label>
+      <select name="EdgeTypeList">
+        <?php
+do {  
+?>
+        <option value="<?php echo $row_EdgeTypeList['id']?>"><?php echo $row_EdgeTypeList['Edge']?></option>
+        <?php
+} while ($row_EdgeTypeList = mysql_fetch_assoc($EdgeTypeList));
+  $rows = mysql_num_rows($EdgeTypeList);
+  if($rows > 0) {
+      mysql_data_seek($EdgeTypeList, 0);
+	  $row_EdgeTypeList = mysql_fetch_assoc($EdgeTypeList);
+  }
+?>
+      </select>
+    </label></td>
   </tr>
   <tr>
     <td>Parttern:</td>
-    <td>&nbsp;</td>
+    <td></td>
   </tr>
   <tr>
     <td>Color:</td>
@@ -244,13 +266,12 @@ $totalRows_loggedinuser = mysql_num_rows($loggedinuser);
     <tr>
     <td colspan="2">&nbsp;</td>
     </tr>
-    <tr>
-    <td colspan="2">HS Code:</td>
+    <tr> 
+    <td colspan="2"  align="center">
+      <input type="submit" name="insert" id="insert" value="提交" />
+      <input type="reset" name="Reset" id="button" value="重设" /></td>
     </tr>
 </table>
-
-                                                            
-                                                            
                                                             </form>
 														</td>
 													</tr>
@@ -278,4 +299,6 @@ $totalRows_loggedinuser = mysql_num_rows($loggedinuser);
 </html>
 <?php
 mysql_free_result($loggedinuser);
+
+mysql_free_result($EdgeTypeList);
 ?>
