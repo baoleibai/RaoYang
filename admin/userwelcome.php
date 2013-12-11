@@ -1,5 +1,4 @@
 <?php require_once('../Connections/raoYang.php'); ?>
-<?php require_once('../Connections/raoYang.php'); ?>
 <?php
 //initialize the session
 if (!isset($_SESSION)) {
@@ -65,6 +64,55 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
 }
 }
 
+$editFormAction = $_SERVER['PHP_SELF'];
+if (isset($_SERVER['QUERY_STRING'])) {
+  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
+}
+
+if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "addProduct")) {
+  $insertSQL = sprintf("INSERT INTO BasicProductInfo (`Material Type`, Width, Weight, `Yarn Count`, Density, Colour, `Usage`, Technics, Pattern, Composition, Edge, `Export Markets`, Name, TradeTerms, PaymentTerms, UnitPrice, MinOrder, PriceValidFrom, PriceValidTo, Style, YarnType, ExtraWidth, Picture, Trademark, Packing, Standard, Origin, HSCode, ProductCapacity, ProductDescription) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+                       GetSQLValueString($_POST['ProductType'], "text"),
+                       GetSQLValueString($_POST['Width'], "text"),
+                       GetSQLValueString($_POST['Weight'], "text"),
+                       GetSQLValueString($_POST['YarnCount'], "text"),
+                       GetSQLValueString($_POST['Density'], "text"),
+                       GetSQLValueString($_POST['Color'], "text"),
+                       GetSQLValueString($_POST['Usage'], "text"),
+                       GetSQLValueString($_POST['Technics'], "text"),
+                       GetSQLValueString($_POST['Pattern'], "text"),
+                       GetSQLValueString($_POST['Composition'], "text"),
+                       GetSQLValueString($_POST['EdgeTypeList'], "text"),
+                       GetSQLValueString($_POST['ExportMarket'], "text"),
+                       GetSQLValueString($_POST['Name'], "text"),
+                       GetSQLValueString($_POST['TradeTerms'], "text"),
+                       GetSQLValueString($_POST['PaymentTerms'], "text"),
+                       GetSQLValueString($_POST['UnitPrice'], "text"),
+                       GetSQLValueString($_POST['MinOrder'], "text"),
+                       GetSQLValueString($_POST['ValidFrom'], "text"),
+                       GetSQLValueString($_POST['ValidTo'], "text"),
+                       GetSQLValueString($_POST['Style'], "text"),
+                       GetSQLValueString($_POST['YarnType'], "text"),
+                       GetSQLValueString($_POST['ExtraWidth'], "text"),
+                       GetSQLValueString($_POST['PicName'], "text"),
+                       GetSQLValueString($_POST['Trademark'], "text"),
+                       GetSQLValueString($_POST['Packaging'], "text"),
+                       GetSQLValueString($_POST['Standard'], "text"),
+                       GetSQLValueString($_POST['Origin'], "text"),
+                       GetSQLValueString($_POST['HsCode'], "text"),
+                       GetSQLValueString($_POST['Capacity'], "text"),
+                       GetSQLValueString($_POST['ProductDescription'], "text"));
+
+  mysql_select_db($database_raoYang, $raoYang);
+  $Result1 = mysql_query($insertSQL, $raoYang) or die(mysql_error());
+
+  $insertGoTo = "userwelcome.php";
+  if (isset($_SERVER['QUERY_STRING'])) {
+    $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
+    $insertGoTo .= $_SERVER['QUERY_STRING'];
+  }
+  header(sprintf("Location: %s", $insertGoTo));
+}
+
 $colname_loggedinuser = "-1";
 if (isset($_SESSION['MM_Username'])) {
   $colname_loggedinuser = $_SESSION['MM_Username'];
@@ -80,6 +128,24 @@ $query_EdgeTypeList = "SELECT * FROM ProductEdge ORDER BY id ASC";
 $EdgeTypeList = mysql_query($query_EdgeTypeList, $raoYang) or die(mysql_error());
 $row_EdgeTypeList = mysql_fetch_assoc($EdgeTypeList);
 $totalRows_EdgeTypeList = mysql_num_rows($EdgeTypeList);
+
+mysql_select_db($database_raoYang, $raoYang);
+$query_TadeTerms = "SELECT * FROM TradeTerms ORDER BY id ASC";
+$TadeTerms = mysql_query($query_TadeTerms, $raoYang) or die(mysql_error());
+$row_TadeTerms = mysql_fetch_assoc($TadeTerms);
+$totalRows_TadeTerms = mysql_num_rows($TadeTerms);
+
+mysql_select_db($database_raoYang, $raoYang);
+$query_ProductTypeList = "SELECT GroupName FROM ProductGroups ORDER BY GroupName ASC";
+$ProductTypeList = mysql_query($query_ProductTypeList, $raoYang) or die(mysql_error());
+$row_ProductTypeList = mysql_fetch_assoc($ProductTypeList);
+$totalRows_ProductTypeList = mysql_num_rows($ProductTypeList);
+
+mysql_select_db($database_raoYang, $raoYang);
+$query_ColorList = "SELECT Color FROM ProductColor ORDER BY Color ASC";
+$ColorList = mysql_query($query_ColorList, $raoYang) or die(mysql_error());
+$row_ColorList = mysql_fetch_assoc($ColorList);
+$totalRows_ColorList = mysql_num_rows($ColorList);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -87,9 +153,7 @@ $totalRows_EdgeTypeList = mysql_num_rows($EdgeTypeList);
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 <meta name="Keywords" content="Jinsuo Cotton Textile Factory of Raoyang, China CVC 75/25 18*18 60*60 78" grey="" fabric="" for="" australia="" market,="" cvc="" 50="" plain="" polyester="" cotton="" bedding="" sheets="" fabric,="" t="" c="" 52="" 48="" 40s*40s="" 110*85="" 110"="" bleached="" white="" curtain="" home="" textile"="">
 <meta name="Description" content="China Manufacturer, Trading Company of CVC 75/25 18*18 60*60 78" grey="" fabric="" for="" australia="" market,="" cvc="" 50="" plain="" polyester="" cotton="" bedding="" sheets="" fabric,="" t="" c="" 52="" 48="" 40s*40s="" 110*85="" 110"="" bleached="" white="" curtain="" home="" textile="" -="" jinsuo="" factory="" of="" raoyang"="">
-
 <link href="/css/style.css" rel="stylesheet" type="text/css" />
-
 </head>
 <body>
 <table width="100" border="0" align="center" cellpadding="0" cellspacing="0" class="outer">
@@ -120,7 +184,7 @@ $totalRows_EdgeTypeList = mysql_num_rows($EdgeTypeList);
 <table border="0" width="707"  cellspacing="0" cellpadding="0">
 													<tr>
 														<td valign="top" class="box-border">
-														  <form action="" method="post" name="addProduct" target="_self">
+														  <form action="<?php echo $editFormAction; ?>" method="POST" enctype="multipart/form-data" name="addProduct" target="_self">
                                                             <table width="707" border="0" cellpadding="1">
   <tr>
     <th colspan="2"  class="box-head" scope="col">Add Product</th>
@@ -132,88 +196,111 @@ $totalRows_EdgeTypeList = mysql_num_rows($EdgeTypeList);
     </label></td>
   </tr>
   <tr>
+    <td width="158">Product Type:</td>
+    <td width="539"><select name="ProductType">
+      <?php
+do {  
+?>
+      <option value="<?php echo $row_ProductTypeList['GroupName']?>"><?php echo $row_ProductTypeList['GroupName']?></option>
+      <?php
+} while ($row_ProductTypeList = mysql_fetch_assoc($ProductTypeList));
+  $rows = mysql_num_rows($ProductTypeList);
+  if($rows > 0) {
+      mysql_data_seek($ProductTypeList, 0);
+	  $row_ProductTypeList = mysql_fetch_assoc($ProductTypeList);
+  }
+?>
+    </select></td>
+  </tr>
+  <tr>
     <td>Unit Price (US $/ Meter):</td>
     <td><label>
-      <input type="text" name="UnitPrice" id="UnitPrice" />
+      <input name="UnitPrice" type="text" id="UnitPrice" value="$/ Meter" />
     </label></td>
   </tr>
   <tr>
     <td>Min. Order (Meter):</td>
     <td><label>
-      <input type="text" name="MinOrder" id="MinOrder" />
+      <input name="MinOrder" type="text" id="MinOrder" value="20000.0 Meter" />
     </label></td>
   </tr>
   <tr>
     <td>Trade Terms:</td>
-    <td>&nbsp;</td>
+    <td>
+      <input name="TradeTerms" type="text" id="TradeTerms" value="FOB, CFR, CIF" /></td>
   </tr>
   <tr>
     <td>Payment Terms:</td>
-    <td>&nbsp;</td>
+    <td><label for="PaymentTerms"></label>
+      <input name="PaymentTerms" type="text" id="PaymentTerms" value="L/C, T/T" /></td>
   </tr>
   <tr>
-    <td>Product Picture:</td>
-    <td>&nbsp;</td>
+    <td>Picture Name:</td>
+    <td><input name="PicName" type="text" /></td>
   </tr>
   <tr>
     <td>Price Valid From:</td>
-    <td>&nbsp;</td>
+    <td><input type="text" name="ValidFrom" id="ValidFrom" /></td>
   </tr>
   <tr>
     <td>Price Valid To:</td>
-    <td>&nbsp;</td>
+    <td><input type="text" name="ValidTo" id="ValidTo" /></td>
   </tr>
   <tr>
     <td colspan="2" class="box-head">Basic Info.</td>
     </tr>
   <tr>
     <td>Material:</td>
-    <td>&nbsp;</td>
+    <td><label for="Material"></label>
+      <input name="Material" type="text" id="Material" value="Cotton / Polyester" /></td>
   </tr>
   <tr>
     <td>Usage:</td>
-    <td>&nbsp;</td>
+    <td><label for="Usage"></label>
+      <input name="Usage" type="text" id="Usage" value="Home Textile" /></td>
   </tr>
   <tr>
     <td>Width (Inch):</td>
-    <td>&nbsp;</td>
+    <td><label for="Width"></label>
+      <input type="text" name="Width" id="Width" /></td>
   </tr>
   <tr>
     <td>Extra Width (Inch):</td>
-    <td>&nbsp;</td>
+    <td><label for="ExtraWidth"></label>
+      <input type="text" name="ExtraWidth" id="ExtraWidth" /></td>
   </tr>
   <tr>
     <td>Weight (g/m²):</td>
-    <td>&nbsp;</td>
+    <td><input name="Weight" type="text" id="Weight" value="g/m²" /></td>
   </tr>
   <tr>
     <td>Technics:</td>
-    <td>&nbsp;</td>
+    <td><input name="Technics" type="text" id="Technics" value="Woven" /></td>
   </tr>
   <tr>
     <td>Composition:</td>
-    <td>&nbsp;</td>
+    <td><input name="Composition" type="text" id="Composition" value="T/C" /></td>
   </tr>
   <tr>
     <td>Yarn Count:</td>
-    <td>&nbsp;</td>
+    <td><input name="YarnCount" type="text" id="YarnCount" value="32x32" /></td>
   </tr>
   <tr>
     <td>Yarn Type:</td>
-    <td>&nbsp;</td>
+    <td><input type="text" name="YarnType" id="YarnType" /></td>
   </tr>
   <tr>
     <td>Density:</td>
-    <td>&nbsp;</td>
+    <td><input type="text" name="Density" id="Density" /></td>
   </tr>
   <tr>
     <td>Edge:</td>
     <td><label>
-      <select name="EdgeTypeList">
+      <select name="EdgeTypeList" size="1" multiple="multiple">
         <?php
 do {  
 ?>
-        <option value="<?php echo $row_EdgeTypeList['id']?>"><?php echo $row_EdgeTypeList['Edge']?></option>
+        <option value="<?php echo $row_EdgeTypeList['Edge']?>"><?php echo $row_EdgeTypeList['Edge']?></option>
         <?php
 } while ($row_EdgeTypeList = mysql_fetch_assoc($EdgeTypeList));
   $rows = mysql_num_rows($EdgeTypeList);
@@ -226,45 +313,66 @@ do {
     </label></td>
   </tr>
   <tr>
-    <td>Parttern:</td>
-    <td></td>
+    <td>Pattern:</td>
+    <td><input name="Pattern" type="text" id="Pattern" value="Plain" /></td>
+  </tr>
+   <tr>
+    <td>Style:</td>
+    <td><input name="Style" type="text" id="Style" /></td>
   </tr>
   <tr>
     <td>Color:</td>
-    <td>&nbsp;</td>
+    <td><select name="Color" size="1" multiple="multiple" id="Color">
+      <?php
+do {  
+?>
+      <option value="<?php echo $row_ColorList['Color']?>"><?php echo $row_ColorList['Color']?></option>
+      <?php
+} while ($row_ColorList = mysql_fetch_assoc($ColorList));
+  $rows = mysql_num_rows($ColorList);
+  if($rows > 0) {
+      mysql_data_seek($ColorList, 0);
+	  $row_ColorList = mysql_fetch_assoc($ColorList);
+  }
+?>
+    </select></td>
   </tr>
   <tr>
     <td>Export Markets:</td>
-    <td>&nbsp;</td>
+    <td><input name="ExportMarket" type="text" id="ExportMarket" value="Global" /></td>
   </tr>
   <tr>
     <td colspan="2" class="box-head">Additional Info.</td>
     </tr>
-  <tr>
-    <td>Packing:</td>
-    <td>&nbsp;</td>
+    <tr>
+    <td>Trademark:</td>
+    <td><input name="Trademark" type="text" id="Trademark" value="JinSuo" /></td>
   </tr>
   <tr>
-    <td>Standars:</td>
-    <td>&nbsp;</td>
+    <td>Packing:</td>
+    <td><input name="Packaging" type="text" id="Packaging" value="Bales/Roll on Tube" /></td>
+  </tr>
+  <tr>
+    <td>Standards:</td>
+    <td><input name="Standard" type="text" id="Standard" value="SGS" /></td>
   </tr>
   <tr>
     <td>Origin:</td>
-    <td>&nbsp;</td>
+    <td><input name="Origin" type="text" id="Origin" value="Hebei Province, China" /></td>
   </tr>
   <tr>
     <td>HS Code:</td>
-    <td>&nbsp;</td>
+    <td><input type="text" name="HsCode" id="HsCode" /></td>
   </tr>
     <tr>
     <td>Production Capacity (Meter/Month):</td>
-    <td>&nbsp;</td>
+    <td><input name="Capacity" type="text" id="Capacity" value="200000meter/Month" /></td>
   </tr>
     <tr>
     <td colspan="2" class="box-head">Product Description.</td>
     </tr>
     <tr>
-    <td colspan="2">&nbsp;</td>
+    <td colspan="2"><textarea name="ProductDescription" id="ProductDescription" cols="85" rows="10"></textarea></td>
     </tr>
     <tr> 
     <td colspan="2"  align="center">
@@ -272,10 +380,11 @@ do {
       <input type="reset" name="Reset" id="button" value="重设" /></td>
     </tr>
 </table>
-                                                            </form>
-														</td>
+                                                            <input type="hidden" name="MM_insert" value="addProduct" />
+                                                          </form>
+													  </td>
 													</tr>
-												</table>
+											  </table>
 											</td>
 										</tr>
 										
@@ -301,4 +410,10 @@ do {
 mysql_free_result($loggedinuser);
 
 mysql_free_result($EdgeTypeList);
+
+mysql_free_result($TadeTerms);
+
+mysql_free_result($ProductTypeList);
+
+mysql_free_result($ColorList);
 ?>

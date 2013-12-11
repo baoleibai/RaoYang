@@ -4,4 +4,7 @@
 	<infoitem key="UD_loggedinuser" value="name:Surname;datatype:string,name:Firstname;datatype:string" />
 	<infoitem key="UD_EdgeType" value="name:Edge;datatype:string" />
 	<infoitem key="UD_EdgeTypeList" value="name:id;datatype:int,name:Edge;datatype:string" />
+	<infoitem key="UD_TadeTerms" value="name:id;datatype:int,name:TradeTerms;datatype:string" />
+	<infoitem key="UD_ProductTypeList" value="name:GroupName;datatype:string" />
+	<infoitem key="UD_ColorList" value="name:Color;datatype:string" />
 </info>
