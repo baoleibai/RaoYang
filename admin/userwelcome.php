@@ -70,8 +70,8 @@ if (isset($_SERVER['QUERY_STRING'])) {
 }
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "addProduct")) {
-  $insertSQL = sprintf("INSERT INTO BasicProductInfo (`Material Type`, Width, Weight, `Yarn Count`, Density, Colour, `Usage`, Technics, Pattern, Composition, Edge, `Export Markets`, Name, TradeTerms, PaymentTerms, UnitPrice, MinOrder, PriceValidFrom, PriceValidTo, Style, YarnType, ExtraWidth, Picture, Trademark, Packing, Standard, Origin, HSCode, ProductCapacity, ProductDescription) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-                       GetSQLValueString($_POST['ProductType'], "text"),
+  $insertSQL = sprintf("INSERT INTO BasicProductInfo (`Material Type`, Width, Weight, `Yarn Count`, Density, Color, `Usage`, Technics, Pattern, Composition, Edge, `Export Markets`, Name, TradeTerms, PaymentTerms, UnitPrice, MinOrder, PriceValidFrom, PriceValidTo, Style, YarnType, ExtraWidth, Picture, Trademark, Packing, Standard, Origin, HSCode, ProductCapacity, ProductDescription, Component, ModelNo) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+                       GetSQLValueString($_POST['Material'], "text"),
                        GetSQLValueString($_POST['Width'], "text"),
                        GetSQLValueString($_POST['Weight'], "text"),
                        GetSQLValueString($_POST['YarnCount'], "text"),
@@ -80,7 +80,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "addProduct")) {
                        GetSQLValueString($_POST['Usage'], "text"),
                        GetSQLValueString($_POST['Technics'], "text"),
                        GetSQLValueString($_POST['Pattern'], "text"),
-                       GetSQLValueString($_POST['Composition'], "text"),
+                       GetSQLValueString($_POST['ProductCompositionList'], "text"),
                        GetSQLValueString($_POST['EdgeTypeList'], "text"),
                        GetSQLValueString($_POST['ExportMarket'], "text"),
                        GetSQLValueString($_POST['Name'], "text"),
@@ -100,7 +100,9 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "addProduct")) {
                        GetSQLValueString($_POST['Origin'], "text"),
                        GetSQLValueString($_POST['HsCode'], "text"),
                        GetSQLValueString($_POST['Capacity'], "text"),
-                       GetSQLValueString($_POST['ProductDescription'], "text"));
+                       GetSQLValueString($_POST['ProductDescription'], "text"),
+                       GetSQLValueString($_POST['Component'], "text"),
+                       GetSQLValueString($_POST['ModelNo'], "text"));
 
   mysql_select_db($database_raoYang, $raoYang);
   $Result1 = mysql_query($insertSQL, $raoYang) or die(mysql_error());
@@ -146,6 +148,30 @@ $query_ColorList = "SELECT Color FROM ProductColor ORDER BY Color ASC";
 $ColorList = mysql_query($query_ColorList, $raoYang) or die(mysql_error());
 $row_ColorList = mysql_fetch_assoc($ColorList);
 $totalRows_ColorList = mysql_num_rows($ColorList);
+
+mysql_select_db($database_raoYang, $raoYang);
+$query_ProductComposition = "SELECT composition FROM ProductComposition ORDER BY composition ASC";
+$ProductComposition = mysql_query($query_ProductComposition, $raoYang) or die(mysql_error());
+$row_ProductComposition = mysql_fetch_assoc($ProductComposition);
+$totalRows_ProductComposition = mysql_num_rows($ProductComposition);
+
+mysql_select_db($database_raoYang, $raoYang);
+$query_StyleList = "SELECT style FROM ProductStyle ORDER BY style ASC";
+$StyleList = mysql_query($query_StyleList, $raoYang) or die(mysql_error());
+$row_StyleList = mysql_fetch_assoc($StyleList);
+$totalRows_StyleList = mysql_num_rows($StyleList);
+
+mysql_select_db($database_raoYang, $raoYang);
+$query_TypeList = "SELECT quality FROM YarnType ORDER BY quality ASC";
+$TypeList = mysql_query($query_TypeList, $raoYang) or die(mysql_error());
+$row_TypeList = mysql_fetch_assoc($TypeList);
+$totalRows_TypeList = mysql_num_rows($TypeList);
+
+mysql_select_db($database_raoYang, $raoYang);
+$query_QualityList = "SELECT quality FROM ProductQuality ORDER BY quality ASC";
+$QualityList = mysql_query($query_QualityList, $raoYang) or die(mysql_error());
+$row_QualityList = mysql_fetch_assoc($QualityList);
+$totalRows_QualityList = mysql_num_rows($QualityList);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -187,7 +213,7 @@ $totalRows_ColorList = mysql_num_rows($ColorList);
 														  <form action="<?php echo $editFormAction; ?>" method="POST" enctype="multipart/form-data" name="addProduct" target="_self">
                                                             <table width="707" border="0" cellpadding="1">
   <tr>
-    <th colspan="2"  class="box-head" scope="col">Add Product</th>
+    <th colspan="2"  class="box-head" >Add Product</th>
     </tr>
   <tr>
     <td width="158">Product Name:</td>
@@ -215,7 +241,7 @@ do {
   <tr>
     <td>Unit Price (US $/ Meter):</td>
     <td><label>
-      <input name="UnitPrice" type="text" id="UnitPrice" value="$/ Meter" />
+      <input name="UnitPrice" type="text" id="UnitPrice" value="$ / Meter" />
     </label></td>
   </tr>
   <tr>
@@ -249,6 +275,11 @@ do {
   <tr>
     <td colspan="2" class="box-head">Basic Info.</td>
     </tr>
+    <tr>
+    <td>Model No:</td>
+    <td><label for="Model No"></label>
+      <input name="ModelNo" type="text" id="ModelNo" /></td>
+  </tr>
   <tr>
     <td>Material:</td>
     <td><label for="Material"></label>
@@ -279,7 +310,22 @@ do {
   </tr>
   <tr>
     <td>Composition:</td>
-    <td><input name="Composition" type="text" id="Composition" value="T/C" /></td>
+    <td>
+    <select name="ProductCompositionList" size="1" title="<?php echo $row_ProductComposition['composition']; ?>">
+      <?php
+do {  
+?>
+      <option value="<?php echo $row_ProductComposition['composition']?>"><?php echo $row_ProductComposition['composition']?></option>
+      <?php
+} while ($row_ProductComposition = mysql_fetch_assoc($ProductComposition));
+  $rows = mysql_num_rows($ProductComposition);
+  if($rows > 0) {
+      mysql_data_seek($ProductComposition, 0);
+	  $row_ProductComposition = mysql_fetch_assoc($ProductComposition);
+  }
+?>
+    </select>
+    </td>
   </tr>
   <tr>
     <td>Yarn Count:</td>
@@ -287,14 +333,31 @@ do {
   </tr>
   <tr>
     <td>Yarn Type:</td>
-    <td><input type="text" name="YarnType" id="YarnType" /></td>
+    <td><p>
+     
+      <select name="YarnType" size="1">
+        <option value=""></option>
+        <?php
+do {  
+?>
+        <option value="<?php echo $row_TypeList['quality']?>"><?php echo $row_TypeList['quality']?></option>
+        <?php
+} while ($row_TypeList = mysql_fetch_assoc($TypeList));
+  $rows = mysql_num_rows($TypeList);
+  if($rows > 0) {
+      mysql_data_seek($TypeList, 0);
+	  $row_TypeList = mysql_fetch_assoc($TypeList);
+  }
+?>
+      </select>
+      </td>
   </tr>
   <tr>
-    <td>Density:</td>
+    <td>Yarn Density:</td>
     <td><input type="text" name="Density" id="Density" /></td>
   </tr>
   <tr>
-    <td>Edge:</td>
+    <td>Yarn Edge:</td>
     <td><label>
       <select name="EdgeTypeList" size="1" multiple="multiple">
         <?php
@@ -316,12 +379,32 @@ do {
     <td>Pattern:</td>
     <td><input name="Pattern" type="text" id="Pattern" value="Plain" /></td>
   </tr>
+  <tr>
+    <td>Component:</td>
+    <td><input name="Component" type="text" id="Component" /></td>
+  </tr>
    <tr>
-    <td>Style:</td>
-    <td><input name="Style" type="text" id="Style" /></td>
+    <td>Yarn Style:</td>
+    <td>
+    <select name="Style" size="1">
+      <option value=""></option>
+      <?php
+do {  
+?>
+      <option value="<?php echo $row_StyleList['style']?>"><?php echo $row_StyleList['style']?></option>
+      <?php
+} while ($row_StyleList = mysql_fetch_assoc($StyleList));
+  $rows = mysql_num_rows($StyleList);
+  if($rows > 0) {
+      mysql_data_seek($StyleList, 0);
+	  $row_StyleList = mysql_fetch_assoc($StyleList);
+  }
+?>
+    </select>
+    </td>
   </tr>
   <tr>
-    <td>Color:</td>
+    <td>Yarn Color:</td>
     <td><select name="Color" size="1" multiple="multiple" id="Color">
       <?php
 do {  
@@ -333,6 +416,24 @@ do {
   if($rows > 0) {
       mysql_data_seek($ColorList, 0);
 	  $row_ColorList = mysql_fetch_assoc($ColorList);
+  }
+?>
+    </select></td>
+  </tr>
+  <tr>
+    <td>Quality:</td>
+    <td><select name="qualityList" size="1" id="qualityList">
+      <option value=""></option>
+      <?php
+do {  
+?>
+      <option value="<?php echo $row_QualityList['quality']?>"><?php echo $row_QualityList['quality']?></option>
+      <?php
+} while ($row_QualityList = mysql_fetch_assoc($QualityList));
+  $rows = mysql_num_rows($QualityList);
+  if($rows > 0) {
+      mysql_data_seek($QualityList, 0);
+	  $row_QualityList = mysql_fetch_assoc($QualityList);
   }
 ?>
     </select></td>
@@ -366,7 +467,7 @@ do {
   </tr>
     <tr>
     <td>Production Capacity (Meter/Month):</td>
-    <td><input name="Capacity" type="text" id="Capacity" value="200000meter/Month" /></td>
+    <td><input name="Capacity" type="text" id="Capacity" value="200000 Meter/Month" /></td>
   </tr>
     <tr>
     <td colspan="2" class="box-head">Product Description.</td>
@@ -416,4 +517,12 @@ mysql_free_result($TadeTerms);
 mysql_free_result($ProductTypeList);
 
 mysql_free_result($ColorList);
+
+mysql_free_result($ProductComposition);
+
+mysql_free_result($StyleList);
+
+mysql_free_result($TypeList);
+
+mysql_free_result($QualityList);
 ?>

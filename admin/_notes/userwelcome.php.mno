@@ -7,4 +7,8 @@
 	<infoitem key="UD_TadeTerms" value="name:id;datatype:int,name:TradeTerms;datatype:string" />
 	<infoitem key="UD_ProductTypeList" value="name:GroupName;datatype:string" />
 	<infoitem key="UD_ColorList" value="name:Color;datatype:string" />
+	<infoitem key="UD_ProductComposition" value="name:composition;datatype:string" />
+	<infoitem key="UD_StyleList" value="name:style;datatype:string" />
+	<infoitem key="UD_TypeList" value="name:quality;datatype:string" />
+	<infoitem key="UD_QualityList" value="name:quality;datatype:string" />
 </info>

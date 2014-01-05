@@ -22,9 +22,9 @@
 						<table border="0" align="center" cellpadding="0" cellspacing="0">
 							<tr>
 								<td class="toplinks"><a href="#">Homepage</a></td><td class="sap">|</td>
-								<td class="toplinks"><a href="#">About us</a></td><td class="sap">|</td>
 								<td class="toplinks"><a href="#">Products</a></td><td class="sap">|</td>
 								<td class="toplinks"><a href="#">Services</a></td><td class="sap">|</td>
+								<td class="toplinks"><a href="#">About us</a></td><td class="sap">|</td>
 								<td class="toplinks"><a href="#">Contact us</a></td>
 							</tr>
 						</table>
