@@ -70,7 +70,7 @@ if (isset($_SERVER['QUERY_STRING'])) {
 }
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "addProduct")) {
-  $insertSQL = sprintf("INSERT INTO BasicProductInfo (`Material Type`, Width, Weight, `Yarn Count`, Density, Color, `Usage`, Technics, Pattern, Composition, Edge, `Export Markets`, Name, TradeTerms, PaymentTerms, UnitPrice, MinOrder, PriceValidFrom, PriceValidTo, Style, YarnType, ExtraWidth, Picture, Trademark, Packing, Standard, Origin, HSCode, ProductCapacity, ProductDescription, Component, ModelNo) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+  $insertSQL = sprintf("INSERT INTO BasicProductInfo (`Material Type`, Width, Weight, `Yarn Count`, Density, Color, `Usage`, Technics, Pattern, Composition, Edge, `Export Markets`, Name, TradeTerms, PaymentTerms, UnitPrice, MinOrder, PriceValidFrom, PriceValidTo, Style, YarnType, ExtraWidth, Picture, Trademark, Packing, Standard, Origin, HSCode, ProductCapacity, ProductDescription, Quality, Component, ModelNo) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
                        GetSQLValueString($_POST['Material'], "text"),
                        GetSQLValueString($_POST['Width'], "text"),
                        GetSQLValueString($_POST['Weight'], "text"),
@@ -101,6 +101,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "addProduct")) {
                        GetSQLValueString($_POST['HsCode'], "text"),
                        GetSQLValueString($_POST['Capacity'], "text"),
                        GetSQLValueString($_POST['ProductDescription'], "text"),
+                       GetSQLValueString($_POST['qualityList'], "text"),
                        GetSQLValueString($_POST['Component'], "text"),
                        GetSQLValueString($_POST['ModelNo'], "text"));
 
