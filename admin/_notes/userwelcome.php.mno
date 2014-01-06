@@ -11,4 +11,5 @@
 	<infoitem key="UD_StyleList" value="name:style;datatype:string" />
 	<infoitem key="UD_TypeList" value="name:quality;datatype:string" />
 	<infoitem key="UD_QualityList" value="name:quality;datatype:string" />
+	<infoitem key="UD_UsageEecordset" value="name:id;datatype:int,name:usage;datatype:string" />
 </info>

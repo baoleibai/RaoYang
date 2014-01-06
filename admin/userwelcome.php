@@ -173,6 +173,12 @@ $query_QualityList = "SELECT quality FROM ProductQuality ORDER BY quality ASC";
 $QualityList = mysql_query($query_QualityList, $raoYang) or die(mysql_error());
 $row_QualityList = mysql_fetch_assoc($QualityList);
 $totalRows_QualityList = mysql_num_rows($QualityList);
+
+mysql_select_db($database_raoYang, $raoYang);
+$query_UsageEecordset = "SELECT * FROM ProductUsage ORDER BY `usage` ASC";
+$UsageEecordset = mysql_query($query_UsageEecordset, $raoYang) or die(mysql_error());
+$row_UsageEecordset = mysql_fetch_assoc($UsageEecordset);
+$totalRows_UsageEecordset = mysql_num_rows($UsageEecordset);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -288,8 +294,23 @@ do {
   </tr>
   <tr>
     <td>Usage:</td>
-    <td><label for="Usage"></label>
-      <input name="Usage" type="text" id="Usage" value="Home Textile" /></td>
+    <td><p>
+      <label for="Usage"></label>
+      <select name="Usage" size="1" id="Usage"  multiple>
+        <?php
+do {  
+?>
+        <option value="<?php echo $row_UsageEecordset['usage']?>"><?php echo $row_UsageEecordset['usage']?></option>
+        <?php
+} while ($row_UsageEecordset = mysql_fetch_assoc($UsageEecordset));
+  $rows = mysql_num_rows($UsageEecordset);
+  if($rows > 0) {
+      mysql_data_seek($UsageEecordset, 0);
+	  $row_UsageEecordset = mysql_fetch_assoc($UsageEecordset);
+  }
+?>
+      </select>
+      </td>
   </tr>
   <tr>
     <td>Width (Inch):</td>
@@ -526,4 +547,6 @@ mysql_free_result($StyleList);
 mysql_free_result($TypeList);
 
 mysql_free_result($QualityList);
+
+mysql_free_result($UsageEecordset);
 ?>
