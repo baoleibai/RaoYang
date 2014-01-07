@@ -70,30 +70,18 @@ if (isset($_SERVER['QUERY_STRING'])) {
 }
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "addProduct")) {
-	foreach($_POST['Usage'] as $uses) 
-    { 
-        $UsageValues .= $uses ." "; 
-    }
-	foreach($_POST['EdgeTypeList'] as $uses) 
-    { 
-        $EdgeValues .= $uses ." "; 
-    }
-	foreach($_POST['Color'] as $uses) 
-    { 
-        $ColorValues .= $uses ." "; 
-    }
   $insertSQL = sprintf("INSERT INTO BasicProductInfo (`Material Type`, Width, Weight, `Yarn Count`, Density, Color, `Usage`, Technics, Pattern, Composition, Edge, `Export Markets`, Name, TradeTerms, PaymentTerms, UnitPrice, MinOrder, PriceValidFrom, PriceValidTo, Style, YarnType, ExtraWidth, Picture, Trademark, Packing, Standard, Origin, HSCode, ProductCapacity, ProductDescription, Quality, Component, ModelNo) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
                        GetSQLValueString($_POST['Material'], "text"),
                        GetSQLValueString($_POST['Width'], "text"),
                        GetSQLValueString($_POST['Weight'], "text"),
                        GetSQLValueString($_POST['YarnCount'], "text"),
                        GetSQLValueString($_POST['Density'], "text"),
-                       GetSQLValueString($ColorValues, "text"),
-                       GetSQLValueString($UsageValues, "text"),
+                       GetSQLValueString($_POST['Color'], "text"),
+                       GetSQLValueString($_POST['Usage'], "text"),
                        GetSQLValueString($_POST['Technics'], "text"),
                        GetSQLValueString($_POST['Pattern'], "text"),
                        GetSQLValueString($_POST['ProductCompositionList'], "text"),
-                       GetSQLValueString($EdgeValues, "text"),
+                       GetSQLValueString($_POST['EdgeTypeList'], "text"),
                        GetSQLValueString($_POST['ExportMarket'], "text"),
                        GetSQLValueString($_POST['Name'], "text"),
                        GetSQLValueString($_POST['TradeTerms'], "text"),
@@ -308,7 +296,7 @@ do {
     <td>Usage:</td>
     <td><p>
       <label for="Usage"></label>
-      <select name="Usage[]" size="1" id="Usage"  multiple>
+      <select name="Usage" size="1" id="Usage"  multiple>
         <?php
 do {  
 ?>
@@ -393,7 +381,7 @@ do {
   <tr>
     <td>Yarn Edge:</td>
     <td><label>
-      <select name="EdgeTypeList[]" size="1" multiple="multiple">
+      <select name="EdgeTypeList" size="1" multiple="multiple">
         <?php
 do {  
 ?>
@@ -439,7 +427,7 @@ do {
   </tr>
   <tr>
     <td>Yarn Color:</td>
-    <td><select name="Color[]" size="1" multiple="multiple" id="Color">
+    <td><select name="Color" size="1" multiple="multiple" id="Color">
       <?php
 do {  
 ?>
