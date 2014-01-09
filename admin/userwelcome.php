@@ -296,20 +296,7 @@ do {
     <td>Usage:</td>
     <td><p>
       <label for="Usage"></label>
-      <select name="Usage" size="1" id="Usage"  multiple>
-        <?php
-do {  
-?>
-        <option value="<?php echo $row_UsageEecordset['usage']?>"><?php echo $row_UsageEecordset['usage']?></option>
-        <?php
-} while ($row_UsageEecordset = mysql_fetch_assoc($UsageEecordset));
-  $rows = mysql_num_rows($UsageEecordset);
-  if($rows > 0) {
-      mysql_data_seek($UsageEecordset, 0);
-	  $row_UsageEecordset = mysql_fetch_assoc($UsageEecordset);
-  }
-?>
-      </select>
+      <input name="Usage" type="text" id="Usage" value="Home Textile" />
       </td>
   </tr>
   <tr>
@@ -396,6 +383,13 @@ do {
 ?>
       </select>
     </label></td>
+  </tr>
+   <tr>
+    <td>Use:</td>
+    <td><p>
+      <label for="Use"></label>
+      <input name="Use" type="text" id="Use" value="" />
+      </td>
   </tr>
   <tr>
     <td>Pattern:</td>
