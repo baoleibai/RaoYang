@@ -294,7 +294,7 @@ do {
   </tr>
   <tr>
     <td>Usage:</td>
-    <td><p>
+    <td>
       <label for="Usage"></label>
       <input name="Usage" type="text" id="Usage" value="Home Textile" />
       </td>
@@ -319,22 +319,7 @@ do {
   </tr>
   <tr>
     <td>Composition:</td>
-    <td>
-    <select name="ProductCompositionList" size="1" title="<?php echo $row_ProductComposition['composition']; ?>">
-      <?php
-do {  
-?>
-      <option value="<?php echo $row_ProductComposition['composition']?>"><?php echo $row_ProductComposition['composition']?></option>
-      <?php
-} while ($row_ProductComposition = mysql_fetch_assoc($ProductComposition));
-  $rows = mysql_num_rows($ProductComposition);
-  if($rows > 0) {
-      mysql_data_seek($ProductComposition, 0);
-	  $row_ProductComposition = mysql_fetch_assoc($ProductComposition);
-  }
-?>
-    </select>
-    </td>
+    <td><input name="ProductCompositionList" type="text" id="ProductCompositionList" value="50% polyester, 50% cotton, 100% cotton, TC65/35, 80/20, 55/45, CVC 55/45, 65/35, 80/20 etc "/></td>
   </tr>
   <tr>
     <td>Yarn Count:</td>
@@ -342,8 +327,7 @@ do {
   </tr>
   <tr>
     <td>Yarn Type:</td>
-    <td><p>
-     
+    <td>
       <select name="YarnType" size="1">
         <option value=""></option>
         <?php
@@ -367,26 +351,11 @@ do {
   </tr>
   <tr>
     <td>Yarn Edge:</td>
-    <td><label>
-      <select name="EdgeTypeList" size="1" multiple="multiple">
-        <?php
-do {  
-?>
-        <option value="<?php echo $row_EdgeTypeList['Edge']?>"><?php echo $row_EdgeTypeList['Edge']?></option>
-        <?php
-} while ($row_EdgeTypeList = mysql_fetch_assoc($EdgeTypeList));
-  $rows = mysql_num_rows($EdgeTypeList);
-  if($rows > 0) {
-      mysql_data_seek($EdgeTypeList, 0);
-	  $row_EdgeTypeList = mysql_fetch_assoc($EdgeTypeList);
-  }
-?>
-      </select>
-    </label></td>
+    <td><input name="EdgeTypeList" type="text" id="EdgeTypeList"/></td>
   </tr>
    <tr>
     <td>Use:</td>
-    <td><p>
+    <td>
       <label for="Use"></label>
       <input name="Use" type="text" id="Use" value="" />
       </td>
@@ -401,40 +370,11 @@ do {
   </tr>
    <tr>
     <td>Yarn Style:</td>
-    <td>
-    <select name="Style" size="1">
-      <option value=""></option>
-      <?php
-do {  
-?>
-      <option value="<?php echo $row_StyleList['style']?>"><?php echo $row_StyleList['style']?></option>
-      <?php
-} while ($row_StyleList = mysql_fetch_assoc($StyleList));
-  $rows = mysql_num_rows($StyleList);
-  if($rows > 0) {
-      mysql_data_seek($StyleList, 0);
-	  $row_StyleList = mysql_fetch_assoc($StyleList);
-  }
-?>
-    </select>
-    </td>
+    <td><input type="text" name="Style" id="Style" value="Plain, grey or bleached, printing or dyeing"/></td>
   </tr>
   <tr>
     <td>Yarn Color:</td>
-    <td><select name="Color" size="1" multiple="multiple" id="Color">
-      <?php
-do {  
-?>
-      <option value="<?php echo $row_ColorList['Color']?>"><?php echo $row_ColorList['Color']?></option>
-      <?php
-} while ($row_ColorList = mysql_fetch_assoc($ColorList));
-  $rows = mysql_num_rows($ColorList);
-  if($rows > 0) {
-      mysql_data_seek($ColorList, 0);
-	  $row_ColorList = mysql_fetch_assoc($ColorList);
-  }
-?>
-    </select></td>
+    <td><input name="Color" type="text" id="Color" /></td>
   </tr>
   <tr>
     <td>Quality:</td>
@@ -479,7 +419,7 @@ do {
   </tr>
   <tr>
     <td>HS Code:</td>
-    <td><input type="text" name="HsCode" id="HsCode" /></td>
+    <td><input type="text" name="HsCode" id="HsCode" value="5513210020" /></td>
   </tr>
     <tr>
     <td>Production Capacity (Meter/Month):</td>
