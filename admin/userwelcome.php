@@ -263,7 +263,7 @@ do {
   <tr>
     <td>Min. Order (Meter):</td>
     <td><label>
-      <input name="MinOrder" type="text" id="MinOrder" value="20000.0 Meter" />
+      <input name="MinOrder" type="text" id="MinOrder" value="10000.0 Meter" />
     </label></td>
   </tr>
   <tr>
@@ -333,7 +333,7 @@ do {
   </tr>
   <tr>
     <td>Weight (g/m²):</td>
-    <td><input name="Weight" type="text" id="Weight" value="g/m²" /></td>
+    <td><input name="Weight" type="text" id="Weight" value=" g/m²" /></td>
   </tr>
   <tr>
     <td>Technics:</td>
