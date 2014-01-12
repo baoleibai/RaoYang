@@ -82,23 +82,25 @@ $totalRows_ProductCategoryRecordset = mysql_num_rows($ProductCategoryRecordset);
                    <table width="194" border="0" align="center" cellpadding="0" cellspacing="0">
 						    <tr><td height="3"></td></tr>
 						    <tr><td height="20" class="cat-head">Product Categories</td></tr>
-						<?php do { ?>
-						    <tr><td class="leftlinks">
-                            <?php
-							  $colname_ProductCategoryRecordset = $row_ProductCategoryRecordset['GroupName'];
+						<?php do { 
+						 $colname_ProductCategoryRecordset = $row_ProductCategoryRecordset['GroupName'];
+							  $query_ProductCategoryRecordsetNO = sprintf("SELECT ProductType FROM BasicProductInfo WHERE ProductType = %s", 
+										  GetSQLValueString($colname_ProductCategoryRecordset, "text"));
+							   $ProductCategoryRecordsetNO = mysql_query($query_ProductCategoryRecordsetNO, $raoYang) or die(mysql_error());
+							  $Rows_ProductCategoryRecordsetNO = mysql_num_rows($ProductCategoryRecordsetNO);
+						?>   <?php
+							 if ( $Rows_ProductCategoryRecordsetNO > 0 ) {
 							  ?> 
+						    <tr><td class="leftlinks">
+                         
+                              
 						      <a href="productDetails.php?productGroupURL= <?php echo $colname_ProductCategoryRecordset  ?>" target="_self"><?php
 							  echo $row_ProductCategoryRecordset['GroupName'];
 							  ?> 
                               (<?php 
-	
-$query_ProductCategoryRecordsetNO = sprintf("SELECT GroupName FROM ProductGroups WHERE GroupName = %s ORDER BY GroupName ASC", 
-										  GetSQLValueString($colname_ProductCategoryRecordset, "text"));
-$ProductCategoryRecordsetNO = mysql_query($query_ProductCategoryRecordsetNO, $raoYang) or die(mysql_error());
-$row_ProductCategoryRecordsetNO = mysql_fetch_assoc($ProductCategoryRecordsetNO);
-$Rows_ProductCategoryRecordsetNO = mysql_num_rows($ProductCategoryRecordsetNO);
 							   echo $Rows_ProductCategoryRecordsetNO ?>)</a>
 				        </td></tr>
+                        <?php }?>
                          <?php } while ($row_ProductCategoryRecordset = mysql_fetch_assoc($ProductCategoryRecordset)); ?>
 					      </table>
 						  </td>
