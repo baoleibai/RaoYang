@@ -84,8 +84,10 @@ $totalRows_ProductCategoryRecordset = mysql_num_rows($ProductCategoryRecordset);
 						    <tr><td height="20" class="cat-head">Product Categories</td></tr>
 						<?php do { ?>
 						    <tr><td class="leftlinks">
-						      <a href="productDetails.php" target="_self"><?php
+                            <?php
 							  $colname_ProductCategoryRecordset = $row_ProductCategoryRecordset['GroupName'];
+							  ?> 
+						      <a href="productDetails.php?productGroupURL= <?php echo $colname_ProductCategoryRecordset  ?>" target="_self"><?php
 							  echo $row_ProductCategoryRecordset['GroupName'];
 							  ?> 
                               (<?php 
