@@ -1,3 +1,42 @@
+<?php require_once('Connections/raoYang.php'); ?>
+<?php
+if (!function_exists("GetSQLValueString")) {
+function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
+{
+  if (PHP_VERSION < 6) {
+    $theValue = get_magic_quotes_gpc() ? stripslashes($theValue) : $theValue;
+  }
+
+  $theValue = function_exists("mysql_real_escape_string") ? mysql_real_escape_string($theValue) : mysql_escape_string($theValue);
+
+  switch ($theType) {
+    case "text":
+      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
+      break;    
+    case "long":
+    case "int":
+      $theValue = ($theValue != "") ? intval($theValue) : "NULL";
+      break;
+    case "double":
+      $theValue = ($theValue != "") ? doubleval($theValue) : "NULL";
+      break;
+    case "date":
+      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
+      break;
+    case "defined":
+      $theValue = ($theValue != "") ? $theDefinedValue : $theNotDefinedValue;
+      break;
+  }
+  return $theValue;
+}
+}
+
+mysql_select_db($database_raoYang, $raoYang);
+$query_ProductCategoryRecordset = sprintf("SELECT GroupName FROM ProductGroups ORDER BY GroupName ASC");
+$ProductCategoryRecordset = mysql_query($query_ProductCategoryRecordset, $raoYang) or die(mysql_error());
+$row_ProductCategoryRecordset = mysql_fetch_assoc($ProductCategoryRecordset);
+$totalRows_ProductCategoryRecordset = mysql_num_rows($ProductCategoryRecordset);
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <title>RaoYang Gold Shuttle Textiles Factory</title>
@@ -40,30 +79,27 @@
 			<table width="923" border="0" align="center" cellpadding="0" cellspacing="0">
 				<tr><div class="inner_copy"></div>
 					<td valign="top" id="left">
-						<table width="194" border="0" align="center" cellpadding="0" cellspacing="0">
-							<tr><td height="3"></td></tr>
-							<tr><td height="20" class="cat-head">All Categories</td></tr>
-							<tr><td class="leftlinks"><a href="#" target="_blank">ï¿½ Category Name</a></td></tr>
-							<tr><td class="leftlinks"><a href="#" target="_blank">ï¿½ Category Name</a></td></tr>
-							<tr><td class="leftlinks"><a href="#" target="_blank">ï¿½ Category Name</a></td></tr>
-							<tr><td class="leftlinks"><a href="#" target="_blank">ï¿½ Category Name</a></td></tr>
-							<tr><td class="leftlinks"><a href="#" target="_blank">ï¿½ Category Name</a></td></tr>
-							<tr><td class="leftlinks"><a href="#" target="_blank">ï¿½ Category Name</a></td></tr>
-							<tr><td class="leftlinks"><a href="#" target="_blank">ï¿½ Category Name</a></td></tr>
-							<tr><td class="leftlinks"><a href="#" target="_blank">ï¿½ Category Name</a></td></tr>
-							<tr><td class="leftlinks"><a href="#" target="_blank">ï¿½ Category Name</a></td></tr>
-							<tr><td class="leftlinks"><a href="#" target="_blank">ï¿½ Category Name</a></td></tr>
-							<tr><td class="leftlinks"><a href="#" target="_blank">ï¿½ Category Name</a></td></tr>
-							<tr><td height="20" class="cat-head">All Categories</td></tr>
-							<tr><td class="leftlinks"><a href="#" target="_blank">ï¿½ Category Name</a></td></tr>
-							<tr><td class="leftlinks"><a href="#" target="_blank">ï¿½ Category Name</a></td></tr>
-							<tr><td class="leftlinks"><a href="#" target="_blank">ï¿½ Category Name</a></td></tr>
-							<tr><td class="leftlinks"><a href="#" target="_blank">ï¿½ Category Name</a></td></tr>
-							<tr><td class="leftlinks"><a href="#" target="_blank">ï¿½ Category Name</a></td></tr>
-							<tr><td class="leftlinks"><a href="#" target="_blank">ï¿½ Category Name</a></td></tr>
-							<tr><td class="leftlinks"><a href="#" target="_blank">ï¿½ Category Name</a></td></tr>
-						</table>
-					</td>
+                   <table width="194" border="0" align="center" cellpadding="0" cellspacing="0">
+						    <tr><td height="3"></td></tr>
+						    <tr><td height="20" class="cat-head">Product Categories</td></tr>
+						<?php do { ?>
+						    <tr><td class="leftlinks">
+						      <a href="productDetails.php" target="_self"><?php
+							  $colname_ProductCategoryRecordset = $row_ProductCategoryRecordset['GroupName'];
+							  echo $row_ProductCategoryRecordset['GroupName'];
+							  ?> 
+                              (<?php 
+	
+$query_ProductCategoryRecordsetNO = sprintf("SELECT GroupName FROM ProductGroups WHERE GroupName = %s ORDER BY GroupName ASC", 
+										  GetSQLValueString($colname_ProductCategoryRecordset, "text"));
+$ProductCategoryRecordsetNO = mysql_query($query_ProductCategoryRecordsetNO, $raoYang) or die(mysql_error());
+$row_ProductCategoryRecordsetNO = mysql_fetch_assoc($ProductCategoryRecordsetNO);
+$Rows_ProductCategoryRecordsetNO = mysql_num_rows($ProductCategoryRecordsetNO);
+							   echo $Rows_ProductCategoryRecordsetNO ?>)</a>
+				        </td></tr>
+                         <?php } while ($row_ProductCategoryRecordset = mysql_fetch_assoc($ProductCategoryRecordset)); ?>
+					      </table>
+						  </td>
 					<td valign="top">
 						<table width="707" border="0" align="right" cellpadding="0" cellspacing="0">
 							<tr><td class="tag" id="header">Company Slogan<br />will come here...</td></tr>
@@ -173,3 +209,6 @@
 </table>
 </body>
 </html>
+<?php
+mysql_free_result($ProductCategoryRecordset);
+?>
